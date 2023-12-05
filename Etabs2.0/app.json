@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "Etabs2.0",
+    "slug": "Etabs2.0",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "Etabs2.0"
+}

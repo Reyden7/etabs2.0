@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "993368611826",
+    "project_id": "etabs2",
+    "storage_bucket": "etabs2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:993368611826:android:c93e53fc83a4d1402f296b",
+        "android_client_info": {
+          "package_name": "com.etabs20"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC_d3BXWmpQwH7ErKDO5eMFaOhlMeKybFM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
