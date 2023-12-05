@@ -7,6 +7,7 @@ import List from './app/screens/List';
 import Details from './app/screens/Details';
 import {User, onAuthStateChanged} from 'firebase/auth';
 import { FIREBASE_AUTH } from './FirebaseConfig';
+import { FirebaseAuthTypes } from '@react-native-firebase/auth';
 
 const Stack = createNativeStackNavigator();
 const InsideStack = createNativeStackNavigator();
@@ -21,16 +22,14 @@ function InsideLayout()
   );
 }
 export default function App() {
-  const [user, setUser] = useState<User | null>(null);
-
+  const [user, setUser] = useState(null);
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(FIREBASE_AUTH, (user) => {
-      console.log('user', user);
+    onAuthStateChanged(FIREBASE_AUTH, (user) =>{
+      console.log('user',user);
       setUser(user);
     });
-     // Nettoyage de l'effet lors du démontage du composant
-  return () => unsubscribe();
   },[]);
+  
 
   return (
     <NavigationContainer>

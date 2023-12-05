@@ -19,7 +19,7 @@ const Login = () => {
     try{
         const response = await signInWithEmailAndPassword(auth,email,password);
         console.log(response);
-        alert('Check your email !');
+       
     }catch(error : any){
         console.log(error);
         alert('Sign In failed !' + error.message);
