@@ -14,7 +14,7 @@ const user = FIREBASE_AUTH.currentUser;
 
 const List = ({navigation}:RouterProps) => {
   return (
-    <View style={{flex:1, justifyContent: 'center', alignItems:"center"}}>
+    <View style={styles.container} >
         
      {//<Pressable onPress={() => navigation.navigate('Details')}><Text>Details</Text></Pressable>
      <Pressable onPress={() => FIREBASE_AUTH.signOut()}><Text>Logout</Text></Pressable>
@@ -28,7 +28,8 @@ export default List
 
 const styles = StyleSheet.create({
     container:{
-        backgroundColor:"#002E54",
+      flex:1,
+        backgroundColor:"#777777",
     }
     
 })
