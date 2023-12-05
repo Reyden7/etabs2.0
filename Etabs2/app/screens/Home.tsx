@@ -4,6 +4,7 @@ import { NavigationProp } from '@react-navigation/native';
 import { FIREBASE_APP, FIREBASE_AUTH } from '../../FirebaseConfig';
 import Details from './Details';
 import Navigation from './Navigation';
+import Element from './Element';
 
 interface RouterProps{
     navigation:NavigationProp<any,any>;
@@ -15,9 +16,10 @@ const List = ({navigation}:RouterProps) => {
   return (
     <View style={{flex:1, justifyContent: 'center', alignItems:"center"}}>
         
-     <Pressable onPress={() => navigation.navigate('Details')}><Text>Details</Text></Pressable>
+     {//<Pressable onPress={() => navigation.navigate('Details')}><Text>Details</Text></Pressable>
      <Pressable onPress={() => FIREBASE_AUTH.signOut()}><Text>Logout</Text></Pressable>
-     
+      }
+      <Element  />
     </View>
   )
 }
@@ -28,4 +30,6 @@ const styles = StyleSheet.create({
     container:{
         backgroundColor:"#002E54",
     }
+    
 })
+

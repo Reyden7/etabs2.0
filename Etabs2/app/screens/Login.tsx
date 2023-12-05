@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { FIREBASE_AUTH } from '../../FirebaseConfig';
 import { async } from '@firebase/util';
 import {createUserWithEmailAndPassword, signInWithEmailAndPassword} from 'firebase/auth'
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,6 +18,7 @@ const Login = () => {
     setLoading(true);
     try{
         const response = await signInWithEmailAndPassword(auth,email,password);
+        await AsyncStorage.setItem('userEmail', email);
         console.log(response);
        
     }catch(error : any){
@@ -37,6 +38,7 @@ const Login = () => {
     setLoading(true);
     try{
         const response = await createUserWithEmailAndPassword(auth,email,password);
+        await AsyncStorage.setItem('userEmail', email);
         console.log(response);
         alert('Check your email !');
     }catch(error : any){

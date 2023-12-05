@@ -40,9 +40,9 @@ function InsideLayout()
         name="CreateEtabs"
         component={CreateEtabs}
         options={{
-          tabBarLabel: 'Créer des Étiquettes',
+          tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <Icon name="add-plus-button" color='#3398D6' size={size} />
+            <Icon name="add-plus-button" color='#3398D6' backgroundColor="#0000" height="30" width= "30" />
           ),
         }}
       />
