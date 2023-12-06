@@ -6,7 +6,7 @@ import {db} from '../../FirebaseConfig'
 import {ref,set} from 'firebase/database'
 import { Switch } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import UploadEtabs from './UploadEtabs';
 
 const CreateEtabs = () => {
   const [title, setTitle] = useState('');
@@ -141,9 +141,7 @@ const CreateEtabs = () => {
             />
         </View>
         <View style={{alignItems:"center"}}>
-        <Pressable style={styles.ImportButton} onPress={LoadTab}>
-                <Text>Importer</Text>
-            </Pressable>
+        <UploadEtabs/>
         </View>
         <Pressable style={styles.CreateButton} onPress={dataAddOn}>
           <Text>Créer ma Etabs !</Text>
