@@ -141,7 +141,7 @@ const CreateEtabs = () => {
             />
         </View>
         <View style={{alignItems:"center"}}>
-            <Pressable style={styles.ImportButton} onPress={LoadTab}>
+        <Pressable style={styles.ImportButton} onPress={LoadTab}>
                 <Text>Importer</Text>
             </Pressable>
         </View>
