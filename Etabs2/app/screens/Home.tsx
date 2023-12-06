@@ -1,4 +1,4 @@
-import { View, Text, Button, Pressable, StyleSheet } from 'react-native'
+import { View, Text, Button, Pressable, StyleSheet, ScrollView } from 'react-native'
 import React from 'react'
 import { NavigationProp } from '@react-navigation/native';
 import { FIREBASE_APP, FIREBASE_AUTH } from '../../FirebaseConfig';
@@ -14,13 +14,14 @@ const user = FIREBASE_AUTH.currentUser;
 
 const List = ({navigation}:RouterProps) => {
   return (
-    <View style={styles.container} >
+    <ScrollView style={styles.container} >
         
      {//<Pressable onPress={() => navigation.navigate('Details')}><Text>Details</Text></Pressable>
-     <Pressable onPress={() => FIREBASE_AUTH.signOut()}><Text>Logout</Text></Pressable>
+     <Pressable style={{marginTop:80}} ><Text></Text></Pressable>
       }
       <Element  />
-    </View>
+      <Pressable style={{marginTop:80}} ><Text></Text></Pressable>
+    </ScrollView>
   )
 }
 
@@ -30,6 +31,7 @@ const styles = StyleSheet.create({
     container:{
       flex:1,
         backgroundColor:"#777777",
+        
     }
     
 })

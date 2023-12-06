@@ -26,7 +26,7 @@ function InsideLayout()
     <Tab.Navigator
       tabBarOptions={styles.tabBar}
     >
-      <Tab.Screen
+      <Tab.Screen 
         name="Home"
         component={Home}
         options={{
@@ -42,7 +42,7 @@ function InsideLayout()
         options={{
           tabBarLabel: '',
           tabBarIcon: ({ color, size }) => (
-            <Icon name="add-plus-button" color='#3398D6' backgroundColor="#0000" height="30" width= "30" />
+            <Icon name="add-plus-button" color='#3398D6' backgroundColor="#0000" height="30" width= "30" style={{marginTop: 10}}/>
           ),
         }}
       />
@@ -80,6 +80,7 @@ export default function App() {
             name="Inside"
             component={InsideLayout}
             options={{ headerShown: false }}
+            
           />
         ) : (
           <Stack.Screen

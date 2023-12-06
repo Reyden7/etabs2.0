@@ -13,7 +13,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 // Define the StackParamList with the Details screen
 type StackParamList = {
-    Details: { itemId: string };
+    Details: { itemId: string, title:string };
     // Add other screens if necessary
   };
   
@@ -57,9 +57,9 @@ const Element = () => {
     getUserEmail();
   }, []);
 
-  const handleCardPress = (itemId) => {
+  const handleCardPress = (itemId, title) => {
     // Navigate to the details page with the item ID
-    navigation.navigate('Details', { itemId });
+    navigation.navigate('Details', { itemId, title, });
   };
 
   const filteredData = tododata.filter((item) => item.owner === userEmail);
@@ -98,7 +98,7 @@ const Element = () => {
       <Card key={index} style={styles.card}>
         <TouchableOpacity 
         key={index}
-        onPress={() => handleCardPress(item.id)} // Pass the item ID to the handler
+        onPress={() => handleCardPress(item.id, item.title )} // Pass the item ID to the handler
       >
       <Card.Content >
         <Title style={{ textAlign: 'center' }}>{item.title}</Title>
