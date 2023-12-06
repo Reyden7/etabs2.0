@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Pressable } from 'react-native';
 import SelectList from 'react-native-dropdown-select-list'
 import RNPickerSelect from 'react-native-picker-select';
@@ -17,26 +17,25 @@ const CreateEtabs = () => {
   const [favoris, setFavoris] = useState(false)
   const [owner, setOwner] = useState('')
   const [userEmail, setUserEmail] = useState('');
+
+  
   const instruments = [
-    { label: 'Guitare', value: 'guitar' },
-    { label: 'Basse', value: 'bass' },
-    { label: 'Ukulele', value: 'ukulele' },
-    { label: 'Chant', value: 'chant' },
+    { label: 'guitar', value: '1' },
+    { label: 'bass', value: '2' },
+    { label: 'ukulele', value: '3' },
+    { label: 'chant', value: '4' },
   ];
     
   const difficultys = [
-    { label: '1', value: 'green' },
-    { label: '2', value: 'yellow' },
-    { label: '3', value: 'orange' },
-    { label: '4', value: 'red' },
-    { label: '5', value: 'black' },
+    { label: 'Facile', value: '1' },
+    { label: 'Moyen', value: '2' },
+    { label: 'Difficile', value: '3' },
+    { label: 'Expert', value: '4' },
+    { label: 'Oh My God !', value: '5' },
   ];
-  const handleSubmit = () => {
-    // Handle form submission, you can perform actions with the form data here
-    
-    
-  };
+  
 
+  
   const LoadTab = () => {
     // Handle form submission, you can perform actions with the form data here
     console.log("ouverture de l'explorateur de fichier");
@@ -69,20 +68,24 @@ const CreateEtabs = () => {
 
     getUserEmail();
   }, []);
- 
+
+  const [pickerKeyInstru, setPickerKeyInstru] = useState(0);
+  const [pickerKeyDiff, setPickerKeyDiff] = useState(1);
+
   //add data to firebase
   const dataAddOn = () =>{
     const uniqueString = generateUniqueString()
     console.log('Form submitted:', { title, artist, instrument, difficulty, path, favoris, owner });
     set(ref(db,'tabs/' + uniqueString), {
         title: title,
-        artist:artist,
+        subtitle:artist,
         instrument:instrument,
-        difficulty:difficulty,
+        dif:difficulty,
         path:path,
         favoris:favoris,
         owner:userEmail
     });
+     // Réinitialiser les champs du formulaire
     setTitle('')
     setArtist('')
     setInstrument('')
@@ -90,8 +93,14 @@ const CreateEtabs = () => {
     setPath('')
     setFavoris(false)
     setOwner(userEmail)
-  }
+    
+    
+    
+    setPickerKeyDiff((prevKeydiff) => prevKeydiff + 1);
 
+
+  }
+  
   return (
     <View style={styles.container}>
       <Text style={styles.heading}>Create Etabs</Text>
@@ -110,14 +119,19 @@ const CreateEtabs = () => {
         />
 
         <RNPickerSelect
+        key={pickerKeyInstru}
         onValueChange={(value) => setInstrument(value)}
         items={instruments}
         placeholder={{ label: 'Select instrument', value: null }}
+        
+        
         />
         <RNPickerSelect
-        onValueChange={(value) => setDifficulty(value)}
+        key={pickerKeyDiff}
+        onValueChange={(label) => setDifficulty(label)}
         items={difficultys}
         placeholder={{ label: 'Select Difficulty', value: null }}
+        
         />
         <View style={styles.favoriteContainer}>
             <Text style={styles.favoriteLabel}>Favori:</Text>

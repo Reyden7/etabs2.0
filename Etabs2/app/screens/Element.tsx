@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity  } from 'react-native';
+import { View, Text, StyleSheet, Image, TouchableOpacity, Dimensions  } from 'react-native';
 import { Card, Title, Paragraph } from 'react-native-paper'; // Importez les composants de react-native-paper
 import { getDatabase, onValue, ref } from 'firebase/database';
 import { db } from '../../FirebaseConfig';
@@ -9,6 +9,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import { RouteProp, useNavigation } from '@react-navigation/native';
 import Details from './Details';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-table-component';
 
 
 // Define the StackParamList with the Details screen
@@ -67,15 +68,15 @@ const Element = () => {
 
     const getDifficultyColor = (difficulty) => {
         switch (difficulty) {
-          case 1:
+          case '1':
             return 'green';
-          case 2:
+          case '2':
             return 'yellow';
-          case 3:
+          case "3":
             return 'orange';
-          case 4:
+          case "4":
             return 'red';
-          case 5:
+          case "5":
             return 'black';
           default:
             return 'white'; // default color
@@ -93,28 +94,38 @@ const Element = () => {
         return instrumentImages[instru] || require('../img/guitare.png'); // Replace 'default.png' with a default image path
       };
 
+
     return filteredData.map((item, index) => (
         
-      <Card key={index} style={styles.card}>
-        <TouchableOpacity 
-        key={index}
-        onPress={() => handleCardPress(item.id, item.title )} // Pass the item ID to the handler
-      >
-      <Card.Content >
-        <Title style={{ textAlign: 'center' }}>{item.title}</Title>
-        <Paragraph style={{ textAlign: 'center' }}>{item.subtitle}</Paragraph>
-        <Paragraph style={{ textAlign: 'center' }}>{item.favoris}</Paragraph>
-        <View style={{ position: 'absolute', top: 20, left: -50 }}>
-            <Image style={{width: 40, height: 40, resizeMode:'contain' }} source={getInstrument(item.instrument)}  />
-        </View>
-        <Paragraph style={{ position: 'absolute', top: 40, right: -40 }}>
-          <View style={[styles.point, { backgroundColor: getDifficultyColor(item.dif) }]} />
-        </Paragraph>
+    <Card key={index} style={styles.card}>
+      <TouchableOpacity 
+      key={index}
+      onPress={() => handleCardPress(item.id, item.title )} // Pass the item ID to the handler
+    >
         
-      </Card.Content>
+          
+        <Card.Content style={{ flexDirection: "row", width: "100%" }}>
+                <View style={{ width: "10%", alignItems: "flex-end", height:"100%" }}>
+                  <Image
+                    style={{ width: 40, height: 40, top:"20%", resizeMode: "contain" }}
+                    source={getInstrument(item.instrument)}
+                  />
+                </View>
+
+                <View style={{ width: "80%" }}>
+                  <Title style={{ textAlign: "center" }}>{item.title}</Title>
+                  <Paragraph style={{ textAlign: "center" }}>{item.subtitle}</Paragraph>
+                </View>
+
+                <View style={{ width: "10%",height:"100%" }}>
+                  <View style={[styles.point, { backgroundColor: getDifficultyColor(item.dif) }]} />
+                </View>
+        </Card.Content>
+          
+        
       </TouchableOpacity>
+        
     </Card>
-    
     ));
   };
 
@@ -123,15 +134,18 @@ const Element = () => {
 
 export default Element;
 const styles = StyleSheet.create({
-    container: {
+    /*container: {
       flex:1,
       justifyContent: 'center',
       alignItems: 'center',
-      
       padding: 5,
+    },*/
+    container: {
+      flex: 1,
+      padding: 20,
     },
     card: {
-      height: '15%', // Hauteur de 10%
+      height: 100, // Hauteur de 10%
       width: '100%',  // Largeur de 100%
       justifyContent: 'center', // Centrer verticalement
       alignItems: 'center', // Centrer horizontalement
@@ -139,11 +153,17 @@ const styles = StyleSheet.create({
       marginBottom:5,
     },
     point: {
+      
         width: 10,
         height: 10,
         borderRadius: 5,
+        top:"40%"
       },
-    
+
+    pointContainer:{
+       position:"relative",
+        
+    }
     
   });
   

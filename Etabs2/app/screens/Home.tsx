@@ -17,10 +17,10 @@ const List = ({navigation}:RouterProps) => {
     <ScrollView style={styles.container} >
         
      {//<Pressable onPress={() => navigation.navigate('Details')}><Text>Details</Text></Pressable>
-     <Pressable style={{marginTop:80}} ><Text></Text></Pressable>
+     <Pressable style={{marginTop:20}} ><Text></Text></Pressable>
       }
       <Element  />
-      <Pressable style={{marginTop:80}} ><Text></Text></Pressable>
+      <Pressable style={{marginTop:20}} ><Text></Text></Pressable>
     </ScrollView>
   )
 }
