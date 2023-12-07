@@ -16,6 +16,7 @@ export default function UploadEtabs() {
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       quality: 1,
+      
     });
 
     if (!result.cancelled) {

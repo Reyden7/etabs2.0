@@ -28,11 +28,7 @@ const Details: React.FC<{ route: DetailsScreenRouteProp }> = ({ route }) => {
 
   const [url, setUrl] = useState<string | undefined>(undefined);
 
-  const [aspectRatio, setAspectRatio] = useState(null);
-  const handleImageLoad = (event) => {
-    const { width, height } = event.nativeEvent.source;
-    setAspectRatio(width / height);
-  };
+ 
 
   useEffect(() => {
     const func = async () => {
@@ -61,14 +57,14 @@ const Details: React.FC<{ route: DetailsScreenRouteProp }> = ({ route }) => {
 
   return (
     <ScrollView>
-      <View>
-        <Title style={styles.title}>{title}</Title>
+      <View style={styles.container}>
+       
 
         {url && (
           <Image
             source={{ uri: url }}
-            onLoad={handleImageLoad}
-            style={{ ...styles.image, aspectRatio: aspectRatio}} // Adjust dimensions as needed
+            onLoad={() => console.log('Image chargée avec succès.')}
+            style={styles.image} // Adjust dimensions as needed
           />
         )}
 
@@ -81,19 +77,19 @@ export default Details;
 
 const styles = StyleSheet.create({
   
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   title: {
     textAlign: 'center',
     color: 'black',
   },
-  image:{
-    textAlign:"center",
-    justifyContent:"center",
-    alignItems:"center",
-    marginTop: 20,
+  image: {
+    flex: 1,
     width: '100%',
-    height: 3000,
-    // You can adjust the aspect ratio as needed
-    resizeMode: 'cover',
-    
+    height: 2700,
+    resizeMode: 'contain', // ou 'cover' selon vos besoins
   },
 });
