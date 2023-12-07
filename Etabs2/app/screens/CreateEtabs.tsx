@@ -187,6 +187,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     width: '100%',
     alignItems: 'center',
+    marginTop:30,
   },
   ImportButton: {
     backgroundColor: '#7ABAFF',
