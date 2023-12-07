@@ -7,8 +7,10 @@ import {ref,set} from 'firebase/database'
 import { Switch } from 'react-native-paper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import UploadEtabs from './UploadEtabs';
+ // Adjust the import based on your project structure
 
-const CreateEtabs = () => {
+
+const CreateEtabs = ({route}) => {
   const [title, setTitle] = useState('');
   const [artist, setArtist] = useState('');
   const [instrument, setInstrument] = useState('none');
@@ -18,7 +20,12 @@ const CreateEtabs = () => {
   const [owner, setOwner] = useState('')
   const [userEmail, setUserEmail] = useState('');
 
+// Utilisez le paramètre route pour récupérer la valeur
   
+  const FileName = route.params.paramKey
+
+console.log('voici le nom du fichier image : => '+FileName);
+
   const instruments = [
     { label: 'guitar', value: '1' },
     { label: 'bass', value: '2' },
@@ -81,7 +88,7 @@ const CreateEtabs = () => {
         subtitle:artist,
         instrument:instrument,
         dif:difficulty,
-        path:path,
+        path:FileName,
         favoris:favoris,
         owner:userEmail
     });

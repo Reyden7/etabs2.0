@@ -6,9 +6,12 @@ import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { FIREBASE_APP } from '../../FirebaseConfig';
 import { getDownloadURL } from 'firebase/storage';
 import * as FileSystem from 'expo-file-system';
+import { useNavigation } from '@react-navigation/native';
+
 
 export default function UploadEtabs() {
   const [uploading, setUploading] = useState(false);
+  const navigation = useNavigation();
 
   const pickImageAsync = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -41,7 +44,8 @@ export default function UploadEtabs() {
         
 
         const storageRef = ref(storage, day+'_'+month+'_'+year+ '_'+ imageName);
-        console.log(day+'_'+month+'_'+year+ '_'+ imageName);
+        const ImageFullName = day+'_'+month+'_'+year+ '_'+ imageName
+        console.log(ImageFullName);
         const uploadTask = uploadBytes(storageRef, blob, metadata);
 
         // Utilisation de promesses pour gérer l'upload
@@ -49,6 +53,7 @@ export default function UploadEtabs() {
           .then(async (snapshot) => {
             const downloadURL = await getDownloadURL(snapshot.ref);
             console.log('File available at', downloadURL);
+            navigation.navigate('CreateEtabs', {paramKey: ImageFullName });
           })
           .catch((error) => {
             console.error('Error uploading image: ', error);
