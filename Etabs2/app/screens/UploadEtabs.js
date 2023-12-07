@@ -5,6 +5,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { FIREBASE_APP } from '../../FirebaseConfig';
 import { getDownloadURL } from 'firebase/storage';
+import * as FileSystem from 'expo-file-system';
 
 export default function UploadEtabs() {
   const [uploading, setUploading] = useState(false);
@@ -23,12 +24,24 @@ export default function UploadEtabs() {
         const response = await fetch(uri);
         const blob = await response.blob();
 
+        
+
         const storage = getStorage(FIREBASE_APP);
         const metadata = {
           contentType: 'image/jpeg',
         };
+        const currentDate = new Date();
+        const year = currentDate.getFullYear();
+        const month = currentDate.getMonth() + 1; // Note: Months are zero-based, so we add 1
+        const day = currentDate.getDate();
 
-        const storageRef = ref(storage, 'images/' + Date.now());
+         // Utiliser expo-file-system pour extraire le nom du fichier de l'URI
+         const fileInfo = await FileSystem.getInfoAsync(uri);
+         const imageName = fileInfo.uri.split('/').pop();
+        
+
+        const storageRef = ref(storage, day+'_'+month+'_'+year+ '_'+ imageName);
+        console.log(day+'_'+month+'_'+year+ '_'+ imageName);
         const uploadTask = uploadBytes(storageRef, blob, metadata);
 
         // Utilisation de promesses pour gérer l'upload
