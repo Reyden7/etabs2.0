@@ -22,7 +22,7 @@ const CreateEtabs = ({route}) => {
 
 // Utilisez le paramètre route pour récupérer la valeur
   
-  const FileName = route.params.paramKey
+const FileName = route.params ? route.params.paramKey : null;
 
 console.log('voici le nom du fichier image : => '+FileName);
 

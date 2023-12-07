@@ -1,4 +1,4 @@
-import { View, Text, Image, ScrollView } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, SafeAreaView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { RouteProp } from '@react-navigation/native';
 import { Title } from 'react-native-paper';
@@ -28,6 +28,12 @@ const Details: React.FC<{ route: DetailsScreenRouteProp }> = ({ route }) => {
 
   const [url, setUrl] = useState<string | undefined>(undefined);
 
+  const [aspectRatio, setAspectRatio] = useState(null);
+  const handleImageLoad = (event) => {
+    const { width, height } = event.nativeEvent.source;
+    setAspectRatio(width / height);
+  };
+
   useEffect(() => {
     const func = async () => {
       const storage = getStorage();
@@ -41,23 +47,53 @@ const Details: React.FC<{ route: DetailsScreenRouteProp }> = ({ route }) => {
         // Handle the error accordingly (e.g., setUrl to a default value)
       }
     };
+
+    
     func();
-  }, [path]);
+
+  }, 
+  
+  
+  [path]
+  
+);
 
 
   return (
-    <View>
-      <Title style={{ textAlign: "center", top: 10 }}>{title}</Title>
-      {url && (
-        <Image 
-        source={{ uri: url }}
-        style={{marginTop:20, height:'100%', width: '100%', resizeMode: 'cover' }} // Adjust dimensions as needed
-      />
-      )}
-      
-      {/* Render other details based on the itemId */}
-    </View>
+    <ScrollView>
+      <View>
+        <Title style={styles.title}>{title}</Title>
+
+        {url && (
+          <Image
+            source={{ uri: url }}
+            onLoad={handleImageLoad}
+            style={{ ...styles.image, aspectRatio: aspectRatio}} // Adjust dimensions as needed
+          />
+        )}
+
+      </View>
+    </ScrollView>
   );
 };
 
 export default Details;
+
+const styles = StyleSheet.create({
+  
+  title: {
+    textAlign: 'center',
+    color: 'black',
+  },
+  image:{
+    textAlign:"center",
+    justifyContent:"center",
+    alignItems:"center",
+    marginTop: 20,
+    width: '100%',
+    height: 3000,
+    // You can adjust the aspect ratio as needed
+    resizeMode: 'cover',
+    
+  },
+});
