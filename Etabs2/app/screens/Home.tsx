@@ -3,7 +3,6 @@ import React from 'react'
 import { NavigationProp } from '@react-navigation/native';
 import { FIREBASE_APP, FIREBASE_AUTH } from '../../FirebaseConfig';
 import Details from './Details';
-import Navigation from './Navigation';
 import Element from './Element';
 
 interface RouterProps{

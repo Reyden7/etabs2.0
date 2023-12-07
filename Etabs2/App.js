@@ -90,6 +90,7 @@ export default function App() {
           />
         )}
         <Stack.Screen name="Details" component={Details} />
+       
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -14,7 +14,7 @@ import { Table, TableWrapper, Row, Rows, Col, Cols, Cell } from 'react-native-ta
 
 // Define the StackParamList with the Details screen
 type StackParamList = {
-    Details: { itemId: string, title:string };
+    Details: { itemId: string, title:string, path:string };
     // Add other screens if necessary
   };
   
@@ -58,9 +58,9 @@ const Element = () => {
     getUserEmail();
   }, []);
 
-  const handleCardPress = (itemId, title) => {
+  const handleCardPress = (itemId, title, path) => {
     // Navigate to the details page with the item ID
-    navigation.navigate('Details', { itemId, title, });
+    navigation.navigate('Details', { itemId, title, path });
   };
 
   const filteredData = tododata.filter((item) => item.owner === userEmail);
@@ -100,7 +100,7 @@ const Element = () => {
     <Card key={index} style={styles.card}>
       <TouchableOpacity 
       key={index}
-      onPress={() => handleCardPress(item.id, item.title )} // Pass the item ID to the handler
+      onPress={() => handleCardPress(item.id, item.title, item.path )} // Pass the item ID to the handler
     >
         
           
