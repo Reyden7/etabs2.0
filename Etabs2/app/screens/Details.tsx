@@ -10,6 +10,10 @@ import { FIREBASE_APP } from '../../FirebaseConfig';
 import { getDownloadURL } from 'firebase/storage';
 import * as FileSystem from 'expo-file-system';
 import { useNavigation } from '@react-navigation/native';
+import { GestureHandlerRootView, PinchGestureHandler, State } from 'react-native-gesture-handler';
+
+
+
 
 // Define the StackParamList (if not already defined)
 type StackParamList = {
@@ -27,7 +31,7 @@ const Details: React.FC<{ route: DetailsScreenRouteProp }> = ({ route }) => {
   const {path} = route.params;
 
   const [url, setUrl] = useState<string | undefined>(undefined);
-
+  const [scale, setScale] = useState(3);
  
 
   useEffect(() => {
@@ -57,19 +61,31 @@ const Details: React.FC<{ route: DetailsScreenRouteProp }> = ({ route }) => {
 
   return (
     <ScrollView>
+    <GestureHandlerRootView>
       <View style={styles.container}>
-       
-
         {url && (
-          <Image
-            source={{ uri: url }}
-            onLoad={() => console.log('Image chargée avec succès.')}
-            style={styles.image} // Adjust dimensions as needed
-          />
+          <PinchGestureHandler
+            onGestureEvent={({ nativeEvent }) => {
+              const newScale = nativeEvent.scale;
+              // Mise à jour du style de l'image en fonction du facteur de zoom
+              setScale(newScale);
+            }}
+          >
+            <Image
+              source={{ uri: url }}
+              onLoad={() => console.log('Image chargée avec succès.')}
+              style={[
+                styles.image,
+                {
+                  transform: [{ scale: scale }],
+                },
+              ]}
+            />
+          </PinchGestureHandler>
         )}
-
       </View>
-    </ScrollView>
+    </GestureHandlerRootView>
+  </ScrollView>
   );
 };
 
@@ -89,7 +105,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     width: '100%',
-    height: 2700,
+    height: 900,
     resizeMode: 'contain', // ou 'cover' selon vos besoins
   },
 });
