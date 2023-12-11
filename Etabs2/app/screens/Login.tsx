@@ -13,8 +13,7 @@ const Login = () => {
   const handleLogin = async () => {
     // Ajoutez ici la logique de connexion avec Firebase
     console.log("connection")
-    console.log(email);
-    console.log(password);
+    
     setLoading(true);
     try{
         const response = await signInWithEmailAndPassword(auth,email,password);
@@ -33,8 +32,6 @@ const Login = () => {
   const SignUp = async () => {
     // Ajoutez ici la logique de connexion avec Firebase
     console.log("connection")
-    console.log(email);
-    console.log(password);
     setLoading(true);
     try{
         const response = await createUserWithEmailAndPassword(auth,email,password);
