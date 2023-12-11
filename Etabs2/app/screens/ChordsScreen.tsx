@@ -1,11 +1,52 @@
-import { View, Text } from 'react-native';
-import React, { useState } from 'react';
+import { View, Text, ScrollView, StyleSheet, Image  } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
 import { Title } from 'react-native-paper';
+import RNFetchBlob from 'rn-fetch-blob';
+import * as FileSystem from 'expo-file-system';
+
+
 
 const ChordsScreen = () => {
   const [instrument, setInstrument] = useState('');
   const [chordsType, setChordsType] = useState('');
+  const [imagePaths, setImagePaths] = useState([]);
+
+  const image1 = {uri:'../img/Guitare/Majeurs/a.jpg'};
+ 
+  useEffect(() => {
+    const loadImagesFromDirectory = async () => {
+      try {
+        if (instrument && chordsType) {
+           
+          const folderPath = `img/${instrument}/${chordsType}/`;
+          const files = await readDirectory(folderPath);
+          
+          const images = files.map((file) => {
+            return {
+              uri: `/app/${folderPath}${file}`,
+            };
+          });
+
+          setImagePaths(images);
+        }
+      } catch (error) {
+        console.error('Error loading images:', error);
+      }
+    };
+
+    loadImagesFromDirectory();
+  }, [instrument, chordsType]);
+
+  const readDirectory = async (folderPath) => {
+    try {
+      const files = await FileSystem.readDirectoryAsync(`../${folderPath}`);
+      return files.filter((file) => file.endsWith('.jpg'));
+    } catch (error) {
+      console.error('Error reading directory:', error);
+      return [];
+    }
+  };
 
   const handleFilterInstrument = (selectedInstrument) => {
     setInstrument(selectedInstrument);
@@ -19,7 +60,7 @@ const ChordsScreen = () => {
 
   const getChordsTypeOptions = () => {
     switch (instrument) {
-      case 'guitare':
+      case 'Guitare':
         return [
           { label: 'Accords Majeurs', value: 'Majeurs' },
           { label: 'Accords Mineurs', value: 'Mineurs' },
@@ -27,7 +68,7 @@ const ChordsScreen = () => {
           { label: 'Accords Septièmes mineur', value: 'Mineurs7' },
           { label: 'Autres', value: 'Autre' },
         ];
-      case 'ukulele':
+      case 'Ukulele':
         return [
           { label: 'Accords Majeurs', value: 'Majeurs' },
           { label: 'Accords Mineurs', value: 'Mineurs' },
@@ -37,7 +78,7 @@ const ChordsScreen = () => {
           { label: 'Accords Septièmes mineur', value: 'Mineurs7' },
           { label: 'Autres', value: 'Autre' },
         ];
-      case 'basse':
+      case 'Basse':
         return [
           { label: 'Accords Majeurs', value: 'Majeurs' },
           { label: 'Accords Mineurs', value: 'Mineurs' },
@@ -58,44 +99,67 @@ const ChordsScreen = () => {
     }
   };
 
-  var path = '../img/'+instrument+'/'+chordsType;
+
   console.log(instrument);
   console.log(chordsType);
-  if(instrument == '' || instrument == null){path='';}
-  if(chordsType == '' || chordsType == null){path='';}
+
 
 
   return (
     <View>
-      <Title style={{ textAlign: "center", top: 10, fontWeight: "500" }}>Liste des accords {instrument} </Title>
-      <RNPickerSelect
-        placeholder={{ label: "Sélectionnez un instrument", value: '' }}
-        onValueChange={(itemValue) => handleFilterInstrument(itemValue)}
-        items={[
-          { label: 'Guitare', value: 'guitare' },
-          { label: 'Ukulele', value: 'ukulele' },
-          { label: 'Basse', value: 'basse' },
-        ]}
-        style={{ inputAndroid: { color: 'black' } }}
-      />
+      <Title style={styles.title}>Liste des accords {instrument} </Title>
+        <RNPickerSelect
+          placeholder={{ label: "Sélectionnez un instrument", value: '' }}
+          onValueChange={(itemValue) => handleFilterInstrument(itemValue)}
+          items={[
+            { label: 'Guitare', value: 'Guitare' },
+            { label: 'Ukulele', value: 'Ukulele' },
+            { label: 'Basse', value: 'Basse' },
+          ]}
+          style={{ inputAndroid: { color: 'black' } }}
+        />
 
-      <RNPickerSelect
-        placeholder={{ label: "Sélectionnez un Type d'accord", value: '' }}
-        onValueChange={(itemValue) => handleFilterChordsType(itemValue)}
-        items={getChordsTypeOptions()}
-        style={{ inputAndroid: { color: 'black' } }}
-      />
+        <RNPickerSelect
+          placeholder={{ label: "Sélectionnez un Type d'accord", value: '' }}
+          onValueChange={(itemValue) => handleFilterChordsType(itemValue)}
+          items={getChordsTypeOptions()}
+          style={{ inputAndroid: { color: 'black' } }}
+        />
 
-      <Text style={{ marginTop: 20, textAlign: "center" }}>
-        Instrument sélectionné : {instrument}
-        {'\n'}
-        Type d'accord sélectionné : {chordsType}
-      </Text>
-      <Text style={{ marginTop: 20, textAlign: "center" }}>
-        chemin de l'image : {path}
-      </Text>
+        <Text style={{ marginTop: 20, textAlign: "center" }}>
+          Instrument sélectionné : {instrument}
+          {'\n'}
+          Type d'accord sélectionné : {chordsType}
+        </Text>
+        <ScrollView contentContainerStyle={styles.container}>
+        
+      {imagePaths.length > 0 &&  imagePaths.map((path, index) => (
+          <Image key={index} source={path} style={styles.image} />
+        ))}
+        <Image source={image1}></Image>
+      </ScrollView>
     </View>
   );
 }
 
 export default ChordsScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'center',
+  },
+  image: {
+    width: 100,
+    height: 100,
+    margin: 5,
+  },
+  title:{
+    textAlign:"center",
+    top:10,
+  }
+});
+
+
+
