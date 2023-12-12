@@ -2,18 +2,25 @@ import { View, Text, ScrollView, StyleSheet, Image  } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
 import { Title } from 'react-native-paper';
-
+import { Asset } from 'expo-asset';
 import * as FileSystem from 'expo-file-system';
-
+import getImagesFromDirectory from './getImageFromDirectory';
 
 
 const ChordsScreen = () => {
   const [instrument, setInstrument] = useState('');
   const [chordsType, setChordsType] = useState('');
-  const [imagePaths, setImagePaths] = useState([]);
+  const [images, setImages] = useState([]);
 
-  const Gimage1 = {uri:'../img/Guitare/Majeurs/a.jpg'};
- 
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      const fetchedImages = await getImagesFromDirectory(instrument, chordsType);
+      setImages(fetchedImages);
+    };
+
+    fetchImages();
+  }, []);
   
  
 
@@ -101,7 +108,9 @@ const ChordsScreen = () => {
           Type d'accord sélectionné : {chordsType}
         </Text>
         <ScrollView contentContainerStyle={styles.container}>
-        
+        {images.map((image, index) => (
+        <Image key={index} source={image} style={{ width: 100, height: 100 }} />
+      ))}
       
       
       </ScrollView>
@@ -127,6 +136,5 @@ const styles = StyleSheet.create({
     top:10,
   }
 });
-
 
 
