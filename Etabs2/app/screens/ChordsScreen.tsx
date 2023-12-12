@@ -2,7 +2,7 @@ import { View, Text, ScrollView, StyleSheet, Image  } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import RNPickerSelect from 'react-native-picker-select';
 import { Title } from 'react-native-paper';
-import RNFetchBlob from 'rn-fetch-blob';
+
 import * as FileSystem from 'expo-file-system';
 
 
@@ -40,7 +40,9 @@ const ChordsScreen = () => {
 
   const readDirectory = async (folderPath) => {
     try {
-      const files = await FileSystem.readDirectoryAsync(`../${folderPath}`);
+      
+      const files = await FileSystem.readDirectoryAsync(`${FileSystem.documentDirectory}${folderPath}`);
+      
       return files.filter((file) => file.endsWith('.jpg'));
     } catch (error) {
       console.error('Error reading directory:', error);
