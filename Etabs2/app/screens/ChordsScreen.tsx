@@ -12,43 +12,10 @@ const ChordsScreen = () => {
   const [chordsType, setChordsType] = useState('');
   const [imagePaths, setImagePaths] = useState([]);
 
-  const image1 = {uri:'../img/Guitare/Majeurs/a.jpg'};
+  const Gimage1 = {uri:'../img/Guitare/Majeurs/a.jpg'};
  
-  useEffect(() => {
-    const loadImagesFromDirectory = async () => {
-      try {
-        if (instrument && chordsType) {
-           
-          const folderPath = `img/${instrument}/${chordsType}/`;
-          const files = await readDirectory(folderPath);
-          
-          const images = files.map((file) => {
-            return {
-              uri: `/app/${folderPath}${file}`,
-            };
-          });
-
-          setImagePaths(images);
-        }
-      } catch (error) {
-        console.error('Error loading images:', error);
-      }
-    };
-
-    loadImagesFromDirectory();
-  }, [instrument, chordsType]);
-
-  const readDirectory = async (folderPath) => {
-    try {
-      
-      const files = await FileSystem.readDirectoryAsync(`${FileSystem.documentDirectory}${folderPath}`);
-      
-      return files.filter((file) => file.endsWith('.jpg'));
-    } catch (error) {
-      console.error('Error reading directory:', error);
-      return [];
-    }
-  };
+  
+ 
 
   const handleFilterInstrument = (selectedInstrument) => {
     setInstrument(selectedInstrument);
@@ -135,10 +102,8 @@ const ChordsScreen = () => {
         </Text>
         <ScrollView contentContainerStyle={styles.container}>
         
-      {imagePaths.length > 0 &&  imagePaths.map((path, index) => (
-          <Image key={index} source={path} style={styles.image} />
-        ))}
-        <Image source={image1}></Image>
+      
+      
       </ScrollView>
     </View>
   );
